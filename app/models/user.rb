@@ -11,6 +11,12 @@ class User < ApplicationRecord
                                    dependent:   :destroy
   has_many :followers, through: :getting_relationships, source: :follower
 
+  # has many clock in times
+  has_many :routines
+
+  def clock_in(kind)
+    self.routines.create!(kind: kind)
+  end
 
   def follow(user)
     self.following << user

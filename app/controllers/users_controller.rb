@@ -1,6 +1,18 @@
 class UsersController < ApplicationController
   before_action :find_the_user, only: [:follow, :unfollow]
-  before_action :find_current_user, only: [:follow, :unfollow]
+  before_action :find_current_user, only: [:follow, :unfollow, :clock_in]
+
+  def clock_in
+    kind = params[:kind]
+
+    if Routine::TYPES.include?(kind)
+      @current_user.clock_in(kind)
+
+      render json: @current_user.routines.order('created_at DESC') and return
+    else
+      render json: { error: "wrong type, type can only be #{Routine::TYPES}" }, status: :bad_request and return
+    end
+  end
 
   def follow
     @current_user.follow(@user)
