@@ -39,7 +39,7 @@ class User < ApplicationRecord
   end
 
   def trackings_from_last_week
-    trackings.where('created_at BETWEEN ? AND ?', Time.now - 7.days, Time.now)
+    trackings.where('created_at BETWEEN ? AND ?', Time.now - 7.days, Time.now).to_a.sort_by { |t| t.duration }
   end
 
   def follow(user)

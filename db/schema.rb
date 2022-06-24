@@ -27,7 +27,7 @@ ActiveRecord::Schema.define(version: 2022_06_24_012146) do
   end
 
   create_table "trackings", force: :cascade do |t|
-    t.string "duration"
+    t.integer "duration"
     t.integer "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
