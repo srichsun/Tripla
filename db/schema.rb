@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_06_23_155200) do
+ActiveRecord::Schema.define(version: 2022_06_24_012146) do
 
   create_table "follows", force: :cascade do |t|
     t.integer "follower_id"
@@ -21,6 +21,13 @@ ActiveRecord::Schema.define(version: 2022_06_23_155200) do
 
   create_table "routines", force: :cascade do |t|
     t.string "kind"
+    t.integer "user_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "trackings", force: :cascade do |t|
+    t.string "duration"
     t.integer "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

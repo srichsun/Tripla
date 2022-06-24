@@ -1,6 +1,15 @@
 class UsersController < ApplicationController
   before_action :find_the_user, only: [:follow, :unfollow]
-  before_action :find_current_user, only: [:follow, :unfollow, :clock_in]
+  before_action :find_current_user, only: [:follow, :unfollow, :clock_in, :stories]
+
+  def stories
+    stories = []
+    @current_user.followers.each do |follower|
+      stories << { name: follower.name, sleeping_records: follower.sleeping_records }
+    end
+
+    render json: stories.to_json and return
+  end
 
   def clock_in
     kind = params[:kind]

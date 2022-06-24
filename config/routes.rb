@@ -3,4 +3,5 @@ Rails.application.routes.draw do
   post '/:current_user_id/:user_id/follow', to: "users#follow"
   post '/:current_user_id/:user_id/unfollow', to: "users#unfollow"
   post '/:current_user_id/:kind/clock_in', to: "users#clock_in"
+  post '/:current_user_id/stories', to: "users#stories"
 end

@@ -13,9 +13,30 @@ class User < ApplicationRecord
 
   # has many clock in times
   has_many :routines
+  # Sleeping hours
+  has_many :trackings, dependent: :destroy
 
   def clock_in(kind)
     self.routines.create!(kind: kind)
+    adding_sleeping_record if kind == 'awake'
+  end
+
+  def adding_sleeping_record
+    duration = routines.last.created_at - routines.second_to_last.created_at
+    trackings.create!(duration: duration)
+  end
+
+  def sleeping_records
+    sleeping_records = []
+    trackings_from_last_week.each do |tracking|
+      sleeping_records << { "#{tracking.created_at}": tracking.duration }
+    end
+
+    sleeping_records
+  end
+
+  def trackings_from_last_week
+    trackings.where('created_at BETWEEN ? AND ?', Time.now - 7.days, Time.now)
   end
 
   def follow(user)
